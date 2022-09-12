@@ -3,7 +3,7 @@
 
 #
 AUTHOR="Marco Carlessi (marco.carlessi@oracle.com)"
-VERSION="8.0.29.3"
+VERSION="8.0.30.1"
 DESCRIPTION="This script is used to create the laboratory for MySQL Workshops.only when the instructor advise you to use it.
 It's designed to work inside a dedicated compartment in an Oracle Cloud tenancy, with only bootcamp instances.
 Because it may change or disrupt your resources, it have to be used only during workshops and never in production environmnet.
@@ -14,24 +14,24 @@ Refer to workshop manualhow to use it.
 # Packages required to install the software
 # Set these variables with the file names available on https://edelivery.oracle.com
 # MySQL Commercial Server 8.0.xx TAR for Generic Linux x86 (64bit)
-export SRV_TAR='V1020516-01.zip'
+export SRV_TAR='V1022094-01.zip'
 # MySQL Database/Components 8.0.xx Yum Repository TAR for Oracle Linux / RHEL 8 x86 (64bit)
-export REP_RPM='V1020537-01.zip'
+export REP_RPM='V1021831-01.zip'
 # MySQL Enterprise Monitor Service Manager 8.0.xx for Linux x86 (64-bit)
-export MEM_SRV='V1020792-01.zip'
+export MEM_SRV='V1022067-01.zip'
 # MySQL Enterprise Monitor Agent 8.0.xx for Linux x86 (64-bit)
-export MEM_AGT='V1020795-01.zip'
+export MEM_AGT='V1022070-01.zip'
 
 
 # Set these variables with the link available on https://support.oracle.com
 # MySQL Commercial Server 8.0.xx TAR for Generic Linux x86 (64bit)
-export MOS_LINK_SRV_TAR='https://updates.oracle.com/Orion/Services/download/p34103924_580_Linux-x86-64.zip?aru=24747691&patch_file=p34103924_580_Linux-x86-64.zip'
+export MOS_LINK_SRV_TAR='https://updates.oracle.com/Orion/Services/download/p34421881_580_Linux-x86-64.zip?aru=24878649&patch_file=p34421881_580_Linux-x86-64.zip'
 # MySQL Database/Components 8.0.xx Yum Repository TAR for Oracle Linux / RHEL 8 x86 (64bit)
-export MOS_LINK_REP_RPM='https://updates.oracle.com/Orion/Services/download/p34104168_580_Linux-x86-64.zip?aru=24747793&patch_file=p34104168_580_Linux-x86-64.zip'
+export MOS_LINK_REP_RPM='https://updates.oracle.com/Orion/Services/download/p34419752_580_Linux-x86-64.zip?aru=24877766&patch_file=p34419752_580_Linux-x86-64.zip'
 # MySQL Enterprise Monitor Service Manager 8.0.xx for Linux x86 (64-bit)
-export MOS_LINK_MEM_SRV='https://updates.oracle.com/Orion/Services/download/p34120035_800_Linux-x86-64.zip?aru=24754820&patch_file=p34120035_800_Linux-x86-64.zip'
+export MOS_LINK_MEM_SRV='https://updates.oracle.com/Orion/Services/download/p34424903_800_Linux-x86-64.zip?aru=24879753&patch_file=p34424903_800_Linux-x86-64.zip'
 # MySQL Enterprise Monitor Agent 8.0.xx for Linux x86 (64-bit)
-export MOS_LINK_MEM_AGT='https://updates.oracle.com/Orion/Services/download/p34120038_800_Linux-x86-64.zip?aru=24754823&patch_file=p34120038_800_Linux-x86-64.zip'
+export MOS_LINK_MEM_AGT='https://updates.oracle.com/Orion/Services/download/p34424906_800_Linux-x86-64.zip?aru=24879756&patch_file=p34424906_800_Linux-x86-64.zip'
 
 
 #
