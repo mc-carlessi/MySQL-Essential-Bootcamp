@@ -3642,7 +3642,7 @@ menu_advanced () {
 			read -p "Press ENTER to continue"
 			;;
 		3 )
-			download_software_from_mos
+			download_software_from_MOS
 			read -p "Press ENTER to continue"
 			;;
 		esac
@@ -3939,7 +3939,7 @@ menu_general_single_tenancy () {
 			read -p "Press ENTER to continue"
 			;;
 		2 )
-			download_software_from_mos
+			download_software_from_MOS
 			read -p "Press ENTER to continue"
 			;;
 		3 )
