@@ -3,7 +3,7 @@
 
 #
 AUTHOR="Marco Carlessi (marco.carlessi@oracle.com)"
-VERSION="8.0.30.1"
+VERSION="8.0.31.1"
 DESCRIPTION="This script is used to create the laboratory for MySQL Workshops.only when the instructor advise you to use it.
 It's designed to work inside a dedicated compartment in an Oracle Cloud tenancy, with only bootcamp instances.
 Because it may change or disrupt your resources, it have to be used only during workshops and never in production environmnet.
