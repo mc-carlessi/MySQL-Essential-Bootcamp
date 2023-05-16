@@ -2,7 +2,7 @@
  
 This repository is not generic and used **only for dedicated, MySQL handled, workshops**.
 
-***Don't use it as a reference, best practice or other ways outside of his scope (the MySQL Implementation Bootcamp).***
+***Don't use it as a reference, best practice or other ways outside of its scope (the MySQL Implementation Bootcamp).***
 
 Wrong use of these labs may give you wrong understanding and problems with your MySQL servers.
 
