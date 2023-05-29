@@ -1,6 +1,6 @@
 [Summary](./index.md)
 
-[Previous](./mysql_high_availabiltiy)
+[Previous](./mysql_high_availability.md)
 
 # MySQL Monitoring
 
