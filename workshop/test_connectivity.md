@@ -31,6 +31,13 @@
     ls -l /tmp
     ```
 
+    ```console
+    # console
+    ssh -i id_rsa_app-srv opc@<public_ip>
+    sudo ls -l /tmp
+    ls -l /tmp
+    ```
+
     3.	Example of connection using PUTTY is in the addendum “A7) Putty configuration”.
 
 3.	Zoom break-out rooms are isolated each other.
