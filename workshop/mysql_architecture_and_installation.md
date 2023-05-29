@@ -440,11 +440,11 @@ ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
 
     Don’t be confused by the client version and check these lines, to understand “why” (not all are always available…)
 
-    Current user:
-    Connection:
-    UNIX socket:
-    TCP port:
-    Server version:
+    Current user:  
+    Connection:  
+    UNIX socket:  
+    TCP port:  
+    Server version:  
 
 ___
 ```shell
