@@ -22,86 +22,78 @@ These labs cover the yum installation, manual installation with tar file, unders
 **We are working on server:** mysql1
 
 1.	Open an SSH client to app-srv
-
-```shell
-ssh -i id_rsa_app-srv opc@your_public_ip
-```
+    ```shell
+    ssh -i id_rsa_app-srv opc@your_public_ip
+    ```
 
 2.	Connect to mysql1 from app-srv
-
-```shell
-ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
-```
+    ```shell
+    ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
+    ```
 
 3.	**We work from now on server  mysql1.**
     Which MySQL packages are installed on your Linux?
-
-```shell
-sudo rpm -qa | grep mysql
-```
+    ```shell
+    sudo rpm -qa | grep mysql
+    ```
 
 4.	What happens when you try to install the mysql binaries with RedHat repositories? 
     Run this command but don’t confirm
-
-```shell
-sudo yum install mysql 
-```
+    ```shell
+    sudo yum install mysql 
+    ```
 
 5.	As you have seen, above command try to install MariaDB sw. Each distribution has its own repositories and different choices for the packages to install.
 
 6.	Oracle Linux 8 already have the official MySQL repository, but we want here to practice how to import it in a generic/education perspective. 
     First add the repository PGPkey
-
-```shell
-sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022 
-```
+    ```shell
+    sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022 
+    ```
 
 7.	Now download the package from https://dev.mysql.com/downloads/ and install it
-
-```shell
-wget https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
-```
-```shell
-sudo yum -y install mysql80-community-release-el8-1.noarch.rpm
-```
+    ```shell
+    wget https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+    ```
+    ```shell
+    sudo yum -y install mysql80-community-release-el8-1.noarch.rpm
+    ```
 
 8.	Update repository database with the new references
-sudo yum repolist all
+    ```shell
+    sudo yum repolist all
+    ```
 
 9.	Repeat the command above to install mysql-client (without using the mysql module id default repositories, to force the usage of MySQL ones) and note the different packages
-
-```shell
-sudo yum module disable mysql
-sudo yum install mysql
-```
+    ```shell
+    sudo yum module disable mysql
+    ```shell
+    ```
+    sudo yum install mysql
+    ```
 
 10.	If only mysql packages are shown, confirm the installation.
 
 11.	Install mysql-server
-
-```shell
-sudo yum install mysql-server
-```
+    ```shell
+    sudo yum install mysql-server
+    ```
 
 12.	Because MySQL is automatically installed you can use OS command for service management, for example to check if it’s already started
-
-```shell
-sudo systemctl status mysqld
-```
+    ```shell
+    sudo systemctl status mysqld
+    ```
 
 13.	Start MySQL if not started
-
-```shell
-sudo systemctl start mysqld
-```
-```shell
-sudo systemctl status mysqld
-```
+    ```shell
+    sudo systemctl start mysqld
+    ```
+    ```shell
+    sudo systemctl status mysqld
+    ```
 
 14.	Check the content of my.cnf, that is in default folder for linux OS and note some info (lines that stat with “\#” are just comments)
-
     1. Display the content of the file
-
     ```shell
     cat /etc/my.cnf 
     ```
@@ -110,79 +102,70 @@ sudo systemctl status mysqld
         Write down the answer.
 
     3.	check if there are error for the instance looking in the error log file
-
     ```shell
     sudo grep -i error /var/log/mysqld.log
     ```
-
  
 15. Starting from MySQL 5.7 the default installation of MySQL Server generates a one-time password. You find it in error log notes above
-
-```shell
-sudo grep 'temporary' /var/log/mysqld.log
-```
+    ```shell
+    sudo grep 'temporary' /var/log/mysqld.log
+    ```
 
 16.	Login to MySQL using password retrieved in previous step
-
-```shell
-mysql -uroot -p -h localhost
-```
+    ```shell
+    mysql -uroot -p -h localhost
+    ```
 
 17.	Try to run a command and write down the error message.
 
     ERROR MESSAGE: _______________________________________________________________
 
-```sql
-status;
-```
+    ```sql
+    status;
+    ```
 
 18.	Change root password
 
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Welcome1!';
-```
+    ```sql
+    ALTER USER 'root'@'localhost' IDENTIFIED BY 'Welcome1!';
+    ```
 
 
 19.	Retry command above, now it works
-
-```sql
-status;
-```
+    ```sql
+    status;
+    ```
 
 20.	Which databases are installed by default?
-
-```sql
-show databases;
-```
-<pre>
-+--------------------+    
-| Database           |  
-+--------------------+  
-| information_schema |  
-| mysql              |  
-| performance_schema |  
-| sys                |  
-+--------------------+  
-4 rows in set (0.01 sec)
-</pre>
+    ```sql
+    show databases;
+    ```
+    <pre>
+    +--------------------+    
+    | Database           |  
+    +--------------------+  
+    | information_schema |  
+    | mysql              |  
+    | performance_schema |  
+    | sys                |  
+    +--------------------+  
+    4 rows in set (0.01 sec)
+    </pre>
     
 21.	To see which version of MySQL you are using submit the command
-
-```sql
-show variables like "%version%";
-```
+    ```sql
+    show variables like "%version%";
+    ```
 
 22.	Check default users in standard installation
-
-```sql
-select user, host from mysql.user where user='root';
-```
+    ```sql
+    select user, host from mysql.user where user='root';
+    ```
 
 23.	Logout as ‘root’ and connect as admin
-
-```sql
-exit
-```
+    ```sql
+    exit
+    ```
 
 </details>
 
@@ -193,13 +176,12 @@ exit
 **We are working on server:** mysql1
 
 1.	If not already connected, connect to mysql1 server trhougth app-srv
-    >
     ```shell
     ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
     ```
 
 2.	On Oracle Linux8/RHEL8/Centos 8 is required to install ncurses-compat-libs to use the tar package (not for the rpms)
-    >```shell
+    ```shell
     sudo yum install -y ncurses-compat-libs
     ```
 
@@ -404,10 +386,9 @@ Please note that, because the port 3306 is already in use by the community serve
 **We are working on server:** mysql1
 
 1.	If not already connected, connect to mysql1 server trhougth app-srv
-
-```shell
-ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
-```
+    ```shell
+    ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
+    ```
 
 2.  Discussion about MySQL connections.
     Please note that now you have 2 instances on the same server: one on 3306 (community) and one on 3307 (commercial).
@@ -507,103 +488,86 @@ ___
 **We are working on server:** mysql1
 
 1.	If not already connected, connect to mysql1 server trhougth app-srv
-
-```shell
-ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
-```
+    ```shell
+    ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
+    ```
 
 2.	Now that we better understood how to connect, we can remove the community installation and refresh PATH cache with the bash command “hash”
-
-```shell
-sudo yum remove mysql mysql-server
-```
-
-```shell
-hash -r
-```
+    ```shell
+    sudo yum remove mysql mysql-server
+    ```
+    ```shell
+    hash -r
+    ```
 
 3.	Import the world database, that will be used later, from c:\workshop\databases\world  
     You can do it with mysql client
-
-```shell
-mysql -uadmin -p -P3307 -h mysql1 < /workshop/databases/world/world.sql
-```
+    ```shell
+    mysql -uadmin -p -P3307 -h mysql1 < /workshop/databases/world/world.sql
+    ```
 
 4.	Import the employees demo database that is in /workshop/databases folder. The load script is designed to be executed from the directory where it's located, so move there
-
-```shell
-cd /workshop/databases/employees
-```
+    ```shell
+    cd /workshop/databases/employees
+    ```
 
 5. Now we can load the database
-```sql
-mysql -uadmin -p -P3307 -h mysql1 < ./employees.sql
-```
+    ```sql
+    mysql -uadmin -p -P3307 -h mysql1 < ./employees.sql
+    ```
 
 5.	Now we can aslo have a look to some useful SQL Statements.
     So, we connect with the mysql client
-
-```shell
-mysql -uadmin -p -h mysql1 -P 3307
-```
+    ```shell
+    mysql -uadmin -p -h mysql1 -P 3307
+    ```
 
 6. We can see the version of our instance
-
-```sql
-SHOW VARIABLES LIKE "%version%";
-```
+    ```sql
+    SHOW VARIABLES LIKE "%version%";
+    ```
 
 7. We can search which tables are or not in InnoDB Format (table format will be discussed in next module) 
-
-
-```sql
-SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine = 'InnoDB';
-```
-
-```sql
-SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine <> 'InnoDB';
-```
+    ```sql
+    SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine = 'InnoDB';
+    ```
+    ```sql
+    SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine <> 'InnoDB';
+    ```
 
 9. We can search which tables are in InnoDB Format and not in the system databases
-
-```sql
-SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES where engine = 'InnoDB' and table_schema not in ('mysql','information_schema', 'sys');
-```
+    ```sql
+    SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES where engine = 'InnoDB' and table_schema not in ('mysql','information_schema', 'sys');
+    ```
 
 10. We can check the space used by engine
-
-```sql
-SELECT ENGINE, COUNT(*), SUM(DATA_LENGTH)/ 1024 / 1024 AS 'Data MB', SUM(INDEX_LENGTH)/1024 / 1024 AS 'Index MB' FROM information_schema.TABLEs group by engine;
-```
+    ```sql
+    SELECT ENGINE, COUNT(*), SUM(DATA_LENGTH)/ 1024 / 1024 AS 'Data MB', SUM(INDEX_LENGTH)/1024 / 1024 AS 'Index MB' FROM information_schema.TABLEs group by engine;
+    ```
 
 11. We can check the space used by tables
-
-```sql
-SELECT table_schema AS 'Schema', SUM( data_length ) / 1024 / 1024 AS 'Data MB', SUM( index_length ) / 1024 / 1024 AS 'Index MB', SUM( data_length + index_length ) / 1024 / 1024 AS 'Sum' FROM information_schema.tables GROUP BY table_schema ;
-```
+    ```sql
+    SELECT table_schema AS 'Schema', SUM( data_length ) / 1024 / 1024 AS 'Data MB', SUM( index_length ) / 1024 / 1024 AS 'Index MB', SUM( data_length + index_length ) / 1024 / 1024 AS 'Sum' FROM information_schema.tables GROUP BY table_schema ;
+    ```
 
 12. We can check the actual connections
-
-```sql
-SHOW FULL PROCESSLIST; 
-```
+    ```sql
+    SHOW FULL PROCESSLIST; 
+    ```
 
 13. It's also possible to use a different terminator to show the result in horizontal (;) or vertical (\G) format.
     Try these commands.
-
-```sql
-SHOW GLOBAL VARIABLES\G
-```
+    ```sql
+    SHOW GLOBAL VARIABLES\G
+    ```
 
 14. We can check various values for the overall status
-
-```sql
-SHOW GLOBAL STATUS\G 
-```
-
-```sql
-SHOW ENGINE INNODB STATUS\G 
-```
+    ```sql
+    SHOW GLOBAL STATUS\G 
+    ```
+    ```sql
+    SHOW ENGINE INNODB STATUS\G 
+    ```
 
 </details>
 
