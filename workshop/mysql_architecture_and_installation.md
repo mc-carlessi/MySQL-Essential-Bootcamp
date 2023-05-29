@@ -478,8 +478,7 @@ ___
 
 </details>
 
-</details>
-<details><summary>Task 3 - Import test databases</summary>
+<details><summary>Task 4 - Import test databases</summary>
 
 **Objective:**
 - install test databases for labs (world and employees)
