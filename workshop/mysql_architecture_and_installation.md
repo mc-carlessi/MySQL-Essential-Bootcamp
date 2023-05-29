@@ -172,15 +172,21 @@ shell-mysql1> sudo yum repolist all
     
 21.	To see which version of MySQL you are using submit the command
 
-mysql> show variables like "%version%";
+    ```sql
+    show variables like "%version%";
+    ```
 
 22.	Check default users in standard installation
 
-mysql> select user, host from mysql.user where user='root';
+    ```sql
+    select user, host from mysql.user where user='root';
+    ```
 
 23.	Logout as ‘root’ and connect as admin
 
-mysql> exit
+    ```sql
+    exit
+    ```
 
 ## Task 2 - Detailed Installation of MySQL on Linux
 
