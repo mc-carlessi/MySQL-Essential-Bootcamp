@@ -193,225 +193,206 @@ exit
 **We are working on server:** mysql1
 
 1.	If not already connected, connect to mysql1 server trhougth app-srv
-
-```shell
-ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
-```
+    >
+    ```shell
+    ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
+    ```
 
 2.	On Oracle Linux8/RHEL8/Centos 8 is required to install ncurses-compat-libs to use the tar package (not for the rpms)
-
-```shell
-sudo yum install -y ncurses-compat-libs
-```
+    >```shell
+    sudo yum install -y ncurses-compat-libs
+    ```
 
 3.	Usually, to run mysql is used the user “mysql”, but because he’s already available we show here how create a new one.
-Create a new user/group for your MySQL service (mysqluser/mysqlgrp) and a add ‘mysqlgrp’ group to opc to help labs execution.
-
-```shell
-sudo groupadd mysqlgrp
-```
-```shell
-sudo useradd -r -g mysqlgrp -s /bin/false mysqluser
-```
-```shell
-sudo usermod -a -G mysqlgrp opc
-```
+    Create a new user/group for your MySQL service (mysqluser/mysqlgrp) and a add ‘mysqlgrp’ group to opc to help labs execution.
+    ```shell
+    sudo groupadd mysqlgrp
+    ```
+    ```shell
+    sudo useradd -r -g mysqlgrp -s /bin/false mysqluser
+    ```
+    ```shell
+    sudo usermod -a -G mysqlgrp opc
+    ```
 
 4.	Create new directory structure:
-
-```shell
-sudo mkdir /mysql/ /mysql/etc /mysql/data
-```
-```shell
-sudo mkdir /mysql/log /mysql/temp /mysql/binlog
-```
+    ```shell
+    sudo mkdir /mysql/ /mysql/etc /mysql/data
+    ```
+    ```shell
+    sudo mkdir /mysql/log /mysql/temp /mysql/binlog
+    ```
 
 5.	To simplify the lab, add the mysql bin folder to the bash profile and customize the client prompt.
-Please insert these lines at the end of the file /home/opc/.bashrc
+    Please insert these lines at the end of the file /home/opc/.bashrc
 
     >export PATH=$PATH:/mysql/mysql-latest/bin  
     export MYSQL_PS1="\\u - mysql>\\_"
 
     You can edit the file with the editor that you prefer, here some examples
 
-```shell
-nano /home/opc/.bashrc
-```
-```shell
-vi /home/opc/.bashrc
-```
+    ```shell
+    nano /home/opc/.bashrc
+    ```
+    ```shell
+    vi /home/opc/.bashrc
+    ```
 
 6.	Close the ssh session and reopen it to activate the new privilege and settings for opc user
 
 7.	Extract the tarball in your /mysql folder
-
-```shell
-cd /mysql/
-```
-```shell
-ls -l /workshop/linux/mysql-commercial-8.0.*.tar.xz
-```
-```shell
-sudo tar xvf /workshop/linux/mysql-commercial-8.0.*.tar.xz
-```
+    ```shell
+    cd /mysql/
+    ```
+    ```shell
+    ls -l /workshop/linux/mysql-commercial-8.0.*.tar.xz
+    ```
+    ```shell
+    sudo tar xvf /workshop/linux/mysql-commercial-8.0.*.tar.xz
+    ```
 
 8.	Create a symbolic link to mysql binary installation
-
-```shell
-sudo ln -s mysql-commercial-8.0.* mysql-latest
-```
+    ```shell
+    sudo ln -s mysql-commercial-8.0.* mysql-latest
+    ```
 
 9.	Create a new configuration file my.cnf inside /mysql/etc
 To help you we created one with some variables, please copy it
-
-```shell
- sudo cp /workshop/support/my.cnf.mysql1 /mysql/etc/my.cnf
-```
+    ```shell
+    sudo cp /workshop/support/my.cnf.mysql1 /mysql/etc/my.cnf
+    ```
 
 10.	Check the content of the configuration file to have a look inside.
 Please note that, because the port 3306 is already in use by the community server previously installed , we use now port 3307.
-
-```shell
-cat /mysql/etc/my.cnf
-```
+    ```shell
+    cat /mysql/etc/my.cnf
+    ```
 
 11.	For security reasons change ownership and permissions
+    ```shell
+    sudo chown -R mysqluser:mysqlgrp /mysql
+    ```
+    ```shell
+    sudo chmod -R 750 /mysql
+    ```
 
-```shell
-sudo chown -R mysqluser:mysqlgrp /mysql
-```
-```shell
-sudo chmod -R 750 /mysql
-```
+12. The following permission is for the Lab purpose so that opc account can make changes and copy files to overwrite the content
+    ```shell
+    sudo chmod -R 770 /mysql/etc
+    ```
 
-The following permission is for the Lab purpose so that opc account can make changes and copy files to overwrite the content
-sudo chmod -R 770 /mysql/etc
+13.	Save the changes, log out and log in again from the ssh for the changes to take effect on the user profile.initialize your database
+    ```shell
+    sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --initialize --user=mysqluser
+    ```
 
-12.	Save the changes, log out and log in again from the ssh for the changes to take effect on the user profile.initialize your database
+14.	Start your new mysql instance
+    ```shell
+    sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --user=mysqluser &
+    ```
 
-```shell
-sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --initialize --user=mysqluser
-```
+15.	Verify that process is running
+    ```shell
+    ps -ef | grep mysqld
+    ```
+    ```shell
+    netstat -an | grep 3307
+    ```
 
-13.	Start your new mysql instance
+16.	Another way is searching the message “ready for connections” in error log as one of the last
+    ```shell
+    grep -i ready /mysql/log/err_log.log 
+    ```
 
-```shell
-sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --user=mysqluser &
-```
+17.	Retrieve root password for first login
+    ```shell
+    grep -i 'temporary password' /mysql/log/err_log.log
+    ```
 
-14.	Verify that process is running
+18.	Before version 5.7 it was recommended to run the ' mysql_secure_installation ' script. From version 5.7 all these settings are “by default”, but the script can be used also to setup the validate_password plugin (used later). Execute now mysql_secure_installation
+    ```shell
+    mysql_secure_installation -h127.0.0.1 -P3307
+    ```
 
-```shell
-ps -ef | grep mysqld
-```
-```shell
-netstat -an | grep 3307
-```
+    using these values
+    - **root password:** retrieved from previous step
+    - **new password:** Welcome1!
+    - **setup VALIDATE PASSWORD component:** Y
+    - **password validation policy:** 2
+    - **Change the password for root:** N
+    - **Remove anonymous users:** Y
+    - **Disallow root login remotely:** N
+    - **Remove test database:** Y
+    - **Reload privilege tables now:** Y
 
-15.	Another way is searching the message “ready for connections” in error log as one of the last
+19.	Login to you mysql-advanced installation and check the status.
+    ```shell
+    mysql -uroot -p -h 127.0.0.1 -P3307
+    ```
+    ```sql
+    status
+    ```
 
-```shell
-grep -i ready /mysql/log/err_log.log 
-```
+20.	Shutdown the service
+    ```sql
+    exit
+    ```
+    ```sql
+    mysqladmin -uroot -h127.0.0.1 -p -P3307 shutdown
+    ```
 
-16.	Retrieve root password for first login
-
-```shell
-grep -i 'temporary password' /mysql/log/err_log.log
-```
-
-17.	Before version 5.7 it was recommended to run the ' mysql_secure_installation ' script. From version 5.7 all these settings are “by default”, but the script can be used also to setup the validate_password plugin (used later). Execute now mysql_secure_installation
-
-```shell
-mysql_secure_installation -h127.0.0.1 -P3307
-```
-
-using these values
-- **root password:** retrieved from previous step
-- **new password:** Welcome1!
-- **setup VALIDATE PASSWORD component:** Y
-- **password validation policy:** 2
-- **Change the password for root:** N
-- **Remove anonymous users:** Y
-- **Disallow root login remotely:** N
-- **Remove test database:** Y
-- **Reload privilege tables now:** Y
-
-18.	Login to you mysql-advanced installation and check the status.
-
-```shell
-mysql -uroot -p -h 127.0.0.1 -P3307
-```
-```sql
-status
-```
-
-19.	Shutdown the service
-
-```sql
-exit
-```
-```sql
-mysqladmin -uroot -h127.0.0.1 -p -P3307 shutdown
-```
-
-20.	Configure automatic startup and shutdown with system.
-Add a systemd service unit configuration file with details about the MySQL service. The file is named mysqld.service and is placed in /usr/lib/systemd/system. We created one for you (See addendum for the content)
-
-```shell
-sudo cp /workshop/support/mysqld-advanced.service /usr/lib/systemd/system/
-```
-```shell
-sudo chmod 644 /usr/lib/systemd/system/mysqld-advanced.service
-```
-```shell
-sudo systemctl enable mysqld-advanced.service
-```
+21.	Configure automatic startup and shutdown with system.
+    Add a systemd service unit configuration file with details about the MySQL service. The file is named mysqld.service and is placed in /usr/lib/systemd/system. We created one for you (See addendum for the content)
+    ```shell
+    sudo cp /workshop/support/mysqld-advanced.service /usr/lib/systemd/system/
+    ```
+    ```shell
+    sudo chmod 644 /usr/lib/systemd/system/mysqld-advanced.service
+    ```
+    ```shell
+    sudo systemctl enable mysqld-advanced.service
+    ```
  
-21.	Test start, stop and restart
+22.	Test start, stop and restart
+    ```shell
+    sudo systemctl start mysqld-advanced
+    ```
+    ```shell
+    sudo systemctl status mysqld-advanced
+    ```
+    ```shell
+    sudo systemctl stop mysqld-advanced
+    ```
+    ```shell
+    sudo systemctl status mysqld-advanced
+    ```
+    ```shell
+    sudo systemctl restart mysqld-advanced
+    ```
+    ```shell
+    sudo systemctl status mysqld-advanced
+    ```
 
-```shell
-sudo systemctl start mysqld-advanced
-```
-```shell
-sudo systemctl status mysqld-advanced
-```
-```shell
-sudo systemctl stop mysqld-advanced
-```
-```shell
-sudo systemctl status mysqld-advanced
-```
-```shell
-sudo systemctl restart mysqld-advanced
-```
-```shell
-sudo systemctl status mysqld-advanced
-```
+23.	Reconnect with mysql client
+    ```shell
+    mysql -uroot -p -h 127.0.0.1 -P3307
+    ```
 
-22.	Reconnect with mysql client
+24.	Create a new administrative user called 'admin' with remote access and full privileges
+    ```sql
+    CREATE USER 'admin'@'%' IDENTIFIED BY 'Welcome1!';
+    ```
+    ```sql
+    GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
+    ```
 
-```shell
-mysql -uroot -p -h 127.0.0.1 -P3307
-```
-
-22.	Create a new administrative user called 'admin' with remote access and full privileges
-
-```sql
-CREATE USER 'admin'@'%' IDENTIFIED BY 'Welcome1!';
-```
-```sql
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
-```
-
-23.	In the configuration file was specified to load the commercial Thread Pool Plugin, check if it’s loaded and active. We use here the same command with different output (“;” vs “\G” as line termination)
-
-```sql
-select * from information_schema.plugins where plugin_name like 'thread%';
-```
-```sql
-select * from information_schema.plugins where plugin_name like 'thread%'\G
-```
+25.	In the configuration file was specified to load the commercial Thread Pool Plugin, check if it’s loaded and active. We use here the same command with different output (“;” vs “\G” as line termination)
+    ```sql
+    select * from information_schema.plugins where plugin_name like 'thread%';
+    ```
+    ```sql
+    select * from information_schema.plugins where plugin_name like 'thread%'\G
+    ```
 
 
 
