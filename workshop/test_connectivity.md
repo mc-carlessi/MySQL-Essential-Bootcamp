@@ -4,7 +4,9 @@
 
 ## Introduction
 
-## Task 1 - SSH connection to app-srv server
+<details>
+  <summary>Task 1 - SSH connection to app-srv server</summary> 
+
 Check that you are able to connect to your app-srv server, required to execute labs. 
 
 1.	Follow trainer instructions to download software material (with also this guide)
@@ -21,8 +23,10 @@ Check that you are able to connect to your app-srv server, required to execute l
     ```
 
     3.	If you are using PuTTY, here some tips how to use it: [PuTTY configuration](./putty_instructions.md)
+</details>
 
-## Task 2 - Ask for help inside Zoom Break Out rooms
+<details>
+  <summary>Task 2 - Ask for help inside Zoom Break Out rooms</summary>
 
 In many case, to make the lab execution more comfortable with many attendees,we use the Zoom break-out rooms features.
 Break-out rooms are isolated each other, and to communicate with the trainer you need to use the button “Ask for help” in the zoom interface.
@@ -42,3 +46,4 @@ Please wait that one of the trainers join your session.
 ![Ask for help request sent](../images/zoom-ask_for_help_sent.png)
     
 [Next](./mysql_architecture_and_installation.md)
+</details>

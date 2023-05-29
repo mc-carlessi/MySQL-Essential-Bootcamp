@@ -14,7 +14,8 @@
 - [https://dev.mysql.com/doc/refman/8.0/en/validate-password.html](https://dev.mysql.com/doc/refman/8.0/en/validate-password.html)
 
 
-## Task 1 - Installation of MySQL Community
+<details>
+  <summary>Task 1 - Installation of MySQL Community</summary>
 1.	Open an SSH client to app-srv
 
 ```shell
@@ -179,9 +180,14 @@ select user, host from mysql.user where user='root';
 exit
 ```
 
-## Task 2 - Detailed Installation of MySQL on Linux
+</details>
 
-## Task 3 - Verify the new MySQL Installation on Linux and import test databases
+<details><summary>Task 2 - Detailed Installation of MySQL on Linux</summary>
+
+</details>
+<details><summary>Task 3 - Verify the new MySQL Installation on Linux and import test databases</summary>
+
+</details>
 
 
 [Next](./mysql__database_design.md)
