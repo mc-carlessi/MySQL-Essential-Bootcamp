@@ -32,5 +32,3 @@
     Please wait that one of the trainers join your session.
 
 [Next](./mysql_architecture_and_installation.md)
-
-[Summary](./index.md)
