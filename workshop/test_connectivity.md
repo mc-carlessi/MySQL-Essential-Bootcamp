@@ -1,4 +1,6 @@
-# Test connectivity and zoom BO
+[Summary](./index.md)
+
+# Test lab connectivity and zoom Break Out Rooms
 
 ## Task 1
 
@@ -8,39 +10,27 @@
 
     1.	Connect with your SSH client using the public IP and the provided ssh key.
 
-    2.	Example of connections from Linux, MAC, Windows Powershell
-
-    ```bash
-    # bash
-    ssh -i id_rsa_app-srv opc@<public_ip>
-    sudo ls -l /tmp
-    ls -l /tmp
-    ```
+    2.	As an example here there is the command for Linux, MAC and Windows Powershell
 
     ```shell
-    # shell
-    ssh -i id_rsa_app-srv opc@<public_ip>
-    sudo ls -l /tmp
+    ssh -i id_rsa_app-srv opc@your_public_ip
     ls -l /tmp
     ```
+    so you may ha
 
-    ```ShellScript
-    # ShellScript
-    ssh -i id_rsa_app-srv opc@<public_ip>
-    sudo ls -l /tmp
-    ls -l /tmp
-    ```
+    3.	If you are using PuTTY, here some tips how to use it: [PuTTY configuration](./putty_instructions.md)
 
-    ```console
-    # console
-    ssh -i id_rsa_app-srv opc@<public_ip>
-    sudo ls -l /tmp
-    ls -l /tmp
-    ```
+3.	In many case, to make the lab execution more comfortable with many attendees,we use the Zoom break-out rooms features.
+    Break-out rooms are isolated each other, and to communicate with the trainer you need to use the button “Ask for help” in the zoom interface.
+    Please see pictures below as reference.
 
-    3.	Example of connection using PUTTY is in the addendum “A7) Putty configuration”.
+    1. Press “Ask for help” button
 
-3.	Zoom break-out rooms are isolated each other.
-To ask trainers help, you must use the button “Ask for help” in the zoom interface, then confirm the request (see pictures below). The message “The Host has been invited” disappear after a short time.
+    2. Press "Invite host"
 
-Press it now and wait that the trainer join your session.
+    3. You see now a confirmation message (that disappear after a short time)
+    Please wait that one of the trainers join your session.
+
+[Next](./mysql_architecture_and_installation.md)
+
+[Summary](./index.md)

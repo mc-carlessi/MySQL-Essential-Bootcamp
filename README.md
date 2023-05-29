@@ -7,3 +7,5 @@ This repository is not generic and used **only for dedicated, MySQL handled, wor
 Wrong use of these labs may give you wrong understanding and problems with your MySQL servers.
 
 Of course, if you have questions on it, feel free to reach me at marco.carlessi@oracle.com.
+
+Workhsop starts [here](./workshop/index.md).
