@@ -96,18 +96,18 @@ sudo systemctl status mysqld
 
     1. Display the content of the file
 
-```shell
-cat /etc/my.cnf 
-```
+    ```shell
+    cat /etc/my.cnf 
+    ```
 
     2.	Where is the database and the error log (mysqld.log) stored?
         Write down the answer.
 
     3.	check if there are error for the instance looking in the error log file
 
-```shell
-sudo grep -i error /var/log/mysqld.log
-```
+    ```shell
+    sudo grep -i error /var/log/mysqld.log
+    ```
 
  
 15. Starting from MySQL 5.7 the default installation of MySQL Server generates a one-time password. You find it in error log notes above
@@ -149,17 +149,17 @@ status;
 show databases;
 ```
 
-    <pre>
-    +--------------------+    
-    | Database           |  
-    +--------------------+  
-    | information_schema |  
-    | mysql              |  
-    | performance_schema |  
-    | sys                |  
-    +--------------------+  
-    4 rows in set (0.01 sec)
-    </pre>
+<pre>
++--------------------+    
+| Database           |  
++--------------------+  
+| information_schema |  
+| mysql              |  
+| performance_schema |  
+| sys                |  
++--------------------+  
+4 rows in set (0.01 sec)
+</pre>
     
 21.	To see which version of MySQL you are using submit the command
 
