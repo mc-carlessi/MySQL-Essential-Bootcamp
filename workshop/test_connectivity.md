@@ -20,6 +20,7 @@
     ```powershell
     ssh -i id_rsa_app-srv opc@your_public_ip
     ls -l /tmp
+    sudo ls -l /tmp
     ```
 
     3.	If you are using PuTTY, here some tips how to use it: [PuTTY configuration](./putty_instructions.md)
