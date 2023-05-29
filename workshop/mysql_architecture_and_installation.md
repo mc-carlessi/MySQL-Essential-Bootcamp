@@ -66,7 +66,7 @@ sudo yum -y install mysql80-community-release-el8-1.noarch.rpm
 ```
 
 8.	Update repository database with the new references
-shell-mysql1> sudo yum repolist all
+sudo yum repolist all
 
 9.	Repeat the command above to install mysql-client (without using the mysql module id default repositories, to force the usage of MySQL ones) and note the different packages
 
@@ -154,7 +154,6 @@ status;
 ```sql
 show databases;
 ```
-
 <pre>
 +--------------------+    
 | Database           |  
@@ -209,22 +208,22 @@ sudo yum install -y ncurses-compat-libs
 Create a new user/group for your MySQL service (mysqluser/mysqlgrp) and a add ‘mysqlgrp’ group to opc to help labs execution.
 
 ```shell
-shell-mysql1> sudo groupadd mysqlgrp
+sudo groupadd mysqlgrp
 ```
 ```shell
-shell-mysql1> sudo useradd -r -g mysqlgrp -s /bin/false mysqluser
+sudo useradd -r -g mysqlgrp -s /bin/false mysqluser
 ```
 ```shell
-shell-mysql1> sudo usermod -a -G mysqlgrp opc
+sudo usermod -a -G mysqlgrp opc
 ```
 
 4.	Create new directory structure:
 
 ```shell
-shell-mysql1> sudo mkdir /mysql/ /mysql/etc /mysql/data
+sudo mkdir /mysql/ /mysql/etc /mysql/data
 ```
 ```shell
-shell-mysql1> sudo mkdir /mysql/log /mysql/temp /mysql/binlog
+sudo mkdir /mysql/log /mysql/temp /mysql/binlog
 ```
 
 5.	To simplify the lab, add the mysql bin folder to the bash profile and customize the client prompt.
@@ -236,10 +235,10 @@ Please insert these lines at the end of the file /home/opc/.bashrc
     You can edit the file with the editor that you prefer, here some examples
 
 ```shell
-shell-mysql1> nano /home/opc/.bashrc
+nano /home/opc/.bashrc
 ```
 ```shell
-shell-mysql1> vi /home/opc/.bashrc
+vi /home/opc/.bashrc
 ```
 
 6.	Close the ssh session and reopen it to activate the new privilege and settings for opc user
@@ -247,84 +246,84 @@ shell-mysql1> vi /home/opc/.bashrc
 7.	Extract the tarball in your /mysql folder
 
 ```shell
-shell-mysql1> cd /mysql/
+cd /mysql/
 ```
 ```shell
-shell-mysql1> ls -l /workshop/linux/mysql-commercial-8.0.*.tar.xz
+ls -l /workshop/linux/mysql-commercial-8.0.*.tar.xz
 ```
 ```shell
-shell-mysql1> sudo tar xvf /workshop/linux/mysql-commercial-8.0.*.tar.xz
+sudo tar xvf /workshop/linux/mysql-commercial-8.0.*.tar.xz
 ```
 
 8.	Create a symbolic link to mysql binary installation
 
 ```shell
-shell-mysql1> sudo ln -s mysql-commercial-8.0.* mysql-latest
+sudo ln -s mysql-commercial-8.0.* mysql-latest
 ```
 
 9.	Create a new configuration file my.cnf inside /mysql/etc
 To help you we created one with some variables, please copy it
 
 ```shell
- shell-mysql1> sudo cp /workshop/support/my.cnf.mysql1 /mysql/etc/my.cnf
+ sudo cp /workshop/support/my.cnf.mysql1 /mysql/etc/my.cnf
 ```
 
 10.	Check the content of the configuration file to have a look inside.
 Please note that, because the port 3306 is already in use by the community server previously installed , we use now port 3307.
 
 ```shell
-shell-mysql1> cat /mysql/etc/my.cnf
+cat /mysql/etc/my.cnf
 ```
 
 11.	For security reasons change ownership and permissions
 
 ```shell
-shell-mysql1> sudo chown -R mysqluser:mysqlgrp /mysql
+sudo chown -R mysqluser:mysqlgrp /mysql
 ```
 ```shell
-shell-mysql1> sudo chmod -R 750 /mysql
+sudo chmod -R 750 /mysql
 ```
 
 The following permission is for the Lab purpose so that opc account can make changes and copy files to overwrite the content
-shell-mysql1> sudo chmod -R 770 /mysql/etc
+sudo chmod -R 770 /mysql/etc
 
 12.	Save the changes, log out and log in again from the ssh for the changes to take effect on the user profile.initialize your database
 
 ```shell
-shell-mysql1> sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --initialize --user=mysqluser
+sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --initialize --user=mysqluser
 ```
 
 13.	Start your new mysql instance
 
 ```shell
-shell-mysql1> sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --user=mysqluser &
+sudo /mysql/mysql-latest/bin/mysqld --defaults-file=/mysql/etc/my.cnf --user=mysqluser &
 ```
 
 14.	Verify that process is running
 
 ```shell
-shell-mysql1> ps -ef | grep mysqld
+ps -ef | grep mysqld
 ```
 ```shell
-shell-mysql1> netstat -an | grep 3307
+netstat -an | grep 3307
 ```
 
 15.	Another way is searching the message “ready for connections” in error log as one of the last
 
 ```shell
-shell-mysql1> grep -i ready /mysql/log/err_log.log 
+grep -i ready /mysql/log/err_log.log 
 ```
 
 16.	Retrieve root password for first login
 
 ```shell
-shell-mysql1> grep -i 'temporary password' /mysql/log/err_log.log
+grep -i 'temporary password' /mysql/log/err_log.log
 ```
 
 17.	Before version 5.7 it was recommended to run the ' mysql_secure_installation ' script. From version 5.7 all these settings are “by default”, but the script can be used also to setup the validate_password plugin (used later). Execute now mysql_secure_installation
 
 ```shell
-shell-mysql1> mysql_secure_installation -h127.0.0.1 -P3307
+mysql_secure_installation -h127.0.0.1 -P3307
 ```
 
 using these values
@@ -341,77 +340,77 @@ using these values
 18.	Login to you mysql-advanced installation and check the status.
 
 ```shell
-shell-mysql1> mysql -uroot -p -h 127.0.0.1 -P3307
+mysql -uroot -p -h 127.0.0.1 -P3307
 ```
 ```sql
-mysql> status
+status
 ```
 
 19.	Shutdown the service
 
 ```sql
-mysql> exit
+exit
 ```
 ```sql
-shell-mysql1> mysqladmin -uroot -h127.0.0.1 -p -P3307 shutdown
+mysqladmin -uroot -h127.0.0.1 -p -P3307 shutdown
 ```
 
 20.	Configure automatic startup and shutdown with system.
 Add a systemd service unit configuration file with details about the MySQL service. The file is named mysqld.service and is placed in /usr/lib/systemd/system. We created one for you (See addendum for the content)
 
 ```shell
-shell-mysql1> sudo cp /workshop/support/mysqld-advanced.service /usr/lib/systemd/system/
+sudo cp /workshop/support/mysqld-advanced.service /usr/lib/systemd/system/
 ```
 ```shell
-shell-mysql1> sudo chmod 644 /usr/lib/systemd/system/mysqld-advanced.service
+sudo chmod 644 /usr/lib/systemd/system/mysqld-advanced.service
 ```
 ```shell
-shell-mysql1> sudo systemctl enable mysqld-advanced.service
+sudo systemctl enable mysqld-advanced.service
 ```
  
 21.	Test start, stop and restart
 
 ```shell
-shell-mysql1> sudo systemctl start mysqld-advanced
+sudo systemctl start mysqld-advanced
 ```
 ```shell
-shell-mysql1> sudo systemctl status mysqld-advanced
+sudo systemctl status mysqld-advanced
 ```
 ```shell
-shell-mysql1> sudo systemctl stop mysqld-advanced
+sudo systemctl stop mysqld-advanced
 ```
 ```shell
-shell-mysql1> sudo systemctl status mysqld-advanced
+sudo systemctl status mysqld-advanced
 ```
 ```shell
-shell-mysql1> sudo systemctl restart mysqld-advanced
+sudo systemctl restart mysqld-advanced
 ```
 ```shell
-shell-mysql1> sudo systemctl status mysqld-advanced
+sudo systemctl status mysqld-advanced
 ```
 
 22.	Reconnect with mysql client
 
 ```shell
-shell-mysql1> mysql -uroot -p -h 127.0.0.1 -P3307
+mysql -uroot -p -h 127.0.0.1 -P3307
 ```
 
 22.	Create a new administrative user called 'admin' with remote access and full privileges
 
 ```sql
-mysql> CREATE USER 'admin'@'%' IDENTIFIED BY 'Welcome1!';
+CREATE USER 'admin'@'%' IDENTIFIED BY 'Welcome1!';
 ```
 ```sql
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
 ```
 
 23.	In the configuration file was specified to load the commercial Thread Pool Plugin, check if it’s loaded and active. We use here the same command with different output (“;” vs “\G” as line termination)
 
 ```sql
-mysql> select * from information_schema.plugins where plugin_name like 'thread%';
+select * from information_schema.plugins where plugin_name like 'thread%';
 ```
 ```sql
-mysql> select * from information_schema.plugins where plugin_name like 'thread%'\G
+select * from information_schema.plugins where plugin_name like 'thread%'\G
 ```
 
 
@@ -460,7 +459,7 @@ ___
 mysql -u root -p -P3306
 ```
 ```sql
-mysql> status   
+status   
 ```
 Port: 3306 or 3307? ______ SSL: Y/N ? ______ Connection: Socket/TCP? ______
 ___
@@ -468,7 +467,7 @@ ___
 mysql -u root -p -P3307
 ```
 ```sql
-mysql> status   
+status   
 ```
 Port: 3306 or 3307? ______ SSL: Y/N ? ______ Connection: Socket/TCP? ______
 ___
@@ -476,7 +475,7 @@ ___
 mysql -uroot -p -h localhost -P3310
 ```
 ```sql
-mysql> status   
+status   
 ```
 Port: 3306 or 3307? ______ SSL: Y/N ? ______ Connection: Socket/TCP? ______
 ___
@@ -484,7 +483,7 @@ ___
 mysql -uadmin -p -h 127.0.0.1 -P3307
 ```
 ```sql
-mysql> status   
+status   
 ```
 Port: 3306 or 3307? ______ SSL: Y/N ? ______ Connection: Socket/TCP? ______
 ___
@@ -492,7 +491,7 @@ ___
 mysql -uadmin -p -h mysql1 -P3307
 ```
 ```sql
-mysql> status
+status
 
 Note: we are using here the hostname 
 ```
@@ -502,7 +501,7 @@ ___
 mysql -uroot -p -S /var/lib/mysql/mysql.sock
 ```
 ```sql
-mysql> status   
+status   
 ```
 Port: 3306 or 3307? ______ SSL: Y/N ? ______ Connection: Socket/TCP? ______
 ___
@@ -510,7 +509,7 @@ ___
 mysql -uroot -p -S /mysql/temp/mysql.sock
 ```
 ```sql
-mysql> status   
+status   
 ```
 Port: 3306 or 3307? ______ SSL: Y/N ? ______ Connection: Socket/TCP? ______
 ___
@@ -535,94 +534,94 @@ ssh -i $HOME/sshkeys/id_rsa_mysql1 opc@mysql1
 2.	Now that we better understood how to connect, we can remove the community installation and refresh PATH cache with the bash command “hash”
 
 ```shell
-shell-mysql1> sudo yum remove mysql mysql-server
+sudo yum remove mysql mysql-server
 ```
 
 ```shell
-shell-mysql1> hash -r
+hash -r
 ```
 
 3.	Import the world database, that will be used later, from c:\workshop\databases\world  
     You can do it with mysql client
 
 ```shell
-shell-mysql1> mysql -uadmin -p -P3307 -h mysql1 < /workshop/databases/world/world.sql
+mysql -uadmin -p -P3307 -h mysql1 < /workshop/databases/world/world.sql
 ```
 
 4.	Import the employees demo database that is in /workshop/databases folder. The load script is designed to be executed from the directory where it's located, so move there
 
 ```shell
-shell-mysql1> cd /workshop/databases/employees
+cd /workshop/databases/employees
 ```
 
 5. Now we can load the database
 ```sql
-shell-mysql1> mysql -uadmin -p -P3307 -h mysql1 < ./employees.sql
+mysql -uadmin -p -P3307 -h mysql1 < ./employees.sql
 ```
 
 5.	Now we can aslo have a look to some useful SQL Statements.
     So, we connect with the mysql client
 
 ```shell
-shell-mysql1> mysql -uadmin -p -h mysql1 -P 3307
+mysql -uadmin -p -h mysql1 -P 3307
 ```
 
 6. We can see the version of our instance
 
 ```sql
-mysql> SHOW VARIABLES LIKE "%version%";
+SHOW VARIABLES LIKE "%version%";
 ```
 
 7. We can search which tables are or not in InnoDB Format (table format will be discussed in next module) 
 
 
 ```sql
-mysql> SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine = 'InnoDB';
+SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine = 'InnoDB';
 ```
 
 ```sql
-mysql> SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine <> 'InnoDB';
+SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE engine <> 'InnoDB';
 ```
 
 9. We can search which tables are in InnoDB Format and not in the system databases
 
 ```sql
-mysql> SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES where engine = 'InnoDB' and table_schema not in ('mysql','information_schema', 'sys');
+SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES where engine = 'InnoDB' and table_schema not in ('mysql','information_schema', 'sys');
 ```
 
 10. We can check the space used by engine
 
 ```sql
-mysql> SELECT ENGINE, COUNT(*), SUM(DATA_LENGTH)/ 1024 / 1024 AS 'Data MB', SUM(INDEX_LENGTH)/1024 / 1024 AS 'Index MB' FROM information_schema.TABLEs group by engine;
+SELECT ENGINE, COUNT(*), SUM(DATA_LENGTH)/ 1024 / 1024 AS 'Data MB', SUM(INDEX_LENGTH)/1024 / 1024 AS 'Index MB' FROM information_schema.TABLEs group by engine;
 ```
 
 11. We can check the space used by tables
 
 ```sql
-mysql> SELECT table_schema AS 'Schema', SUM( data_length ) / 1024 / 1024 AS 'Data MB', SUM( index_length ) / 1024 / 1024 AS 'Index MB', SUM( data_length + index_length ) / 1024 / 1024 AS 'Sum' FROM information_schema.tables GROUP BY table_schema ;
+SELECT table_schema AS 'Schema', SUM( data_length ) / 1024 / 1024 AS 'Data MB', SUM( index_length ) / 1024 / 1024 AS 'Index MB', SUM( data_length + index_length ) / 1024 / 1024 AS 'Sum' FROM information_schema.tables GROUP BY table_schema ;
 ```
 
 12. We can check the actual connections
 
 ```sql
-mysql> SHOW FULL PROCESSLIST; 
+SHOW FULL PROCESSLIST; 
 ```
 
 13. It's also possible to use a different terminator to show the result in horizontal (;) or vertical (\G) format.
     Try these commands.
 
 ```sql
-mysql> SHOW GLOBAL VARIABLES\G
+SHOW GLOBAL VARIABLES\G
 ```
 
 14. We can check various values for the overall status
 
 ```sql
-mysql> SHOW GLOBAL STATUS\G 
+SHOW GLOBAL STATUS\G 
 ```
 
 ```sql
-mysql> SHOW ENGINE INNODB STATUS\G 
+SHOW ENGINE INNODB STATUS\G 
 ```
 
 </details>
