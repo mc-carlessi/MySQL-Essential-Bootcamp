@@ -10,9 +10,9 @@
 
 5. [MySQL backup](./mysql_backup.md)
 
-6. [MySQL replication](./mysql_replication)
+6. [MySQL replication](./mysql_replication.md)
 
-7. [MySQL High Availability](./mysql_high_availabiltiy)
+7. [MySQL High Availability](./mysql_high_availability.md)
 
 8. [MySQL monitoring](./mysql_monitoring.md)
 

@@ -2,7 +2,7 @@
 
 [Previous](./mysql__database_design.md)
 
-# MySQL Design
+# MySQL Security
 
 ## Task 1
 

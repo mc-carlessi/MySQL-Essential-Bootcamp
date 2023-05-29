@@ -7,6 +7,6 @@
 ## Task 1
 
 
-[Next](./mysql_high_availabiltiy)
+[Next](./mysql_high_availability)
 
 [Summary](./index.md)
