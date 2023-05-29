@@ -7,6 +7,6 @@
 ## Task 1
 
 
-[Next](./mysql_replication)
+[Next](./mysql_replication.md)
 
 [Summary](./index.md)
