@@ -229,8 +229,8 @@ sudo mkdir /mysql/log /mysql/temp /mysql/binlog
 5.	To simplify the lab, add the mysql bin folder to the bash profile and customize the client prompt.
 Please insert these lines at the end of the file /home/opc/.bashrc
 
-    >export PATH=$PATH:/mysql/mysql-latest/bin
-    >export MYSQL_PS1="\\u - mysql>\\_"
+    >export PATH=$PATH:/mysql/mysql-latest/bin  
+    export MYSQL_PS1="\\u - mysql>\\_"
 
     You can edit the file with the editor that you prefer, here some examples
 
