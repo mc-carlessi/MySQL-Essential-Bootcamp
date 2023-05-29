@@ -67,8 +67,8 @@ These labs cover the yum installation, manual installation with tar file, unders
 9.	Repeat the command above to install mysql-client (without using the mysql module id default repositories, to force the usage of MySQL ones) and note the different packages
     ```shell
     sudo yum module disable mysql
-    ```shell
     ```
+    ```shell
     sudo yum install mysql
     ```
 
