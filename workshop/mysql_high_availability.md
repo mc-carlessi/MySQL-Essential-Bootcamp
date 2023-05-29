@@ -1,6 +1,6 @@
 [Summary](./index.md)
 
-[Previous](./mysql_replication)
+[Previous](./mysql_replication.md)
 
 # MySQL High Availability
 
